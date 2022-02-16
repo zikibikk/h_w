@@ -18,5 +18,7 @@ public class User {
     private String login;
     private String passwordHash;
 
+    private Double wallet;
+
     private List<Music> favourites;
 }
