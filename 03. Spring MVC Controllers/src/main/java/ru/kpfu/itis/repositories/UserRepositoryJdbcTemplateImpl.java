@@ -1,17 +1,22 @@
 package ru.kpfu.itis.repositories;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.kpfu.itis.models.User;
 
 import java.sql.PreparedStatement;
 import java.util.Optional;
 
+@Repository("userRepositoryJdbcTemplateImpl")
 public class UserRepositoryJdbcTemplateImpl implements UserRepository {
 
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     private RowMapper<User> userRowMapper = ((resultSet, rowNum) -> {
@@ -26,6 +31,7 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
     private final String SQL_INSERT = "INSERT INTO users(first_name, last_name, login, password_hash) VALUES (?, ?, ?, ?)";
 
     private final String SQL_FIND_USER_BY_ID = "SELECT * FROM users WHERE id=?;";
+    private final String SQL_FIND_ALL = "SELECT * FROM users;";
     public UserRepositoryJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -73,7 +79,7 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
 
     @Override
     public Iterable<User> findAll() {
-        return null;
+        return jdbcTemplate.query(SQL_FIND_ALL, userRowMapper);
     }
 
     @Override
