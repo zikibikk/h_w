@@ -3,17 +3,19 @@ function sendProduct() {
     let description = document.getElementById("description").value
     let cost = document.getElementById('cost').value
 
-    var product = {
+    const productDto = {
         title: title,
         description: description,
         cost: cost
-    }
+    };
+    console.log(JSON.stringify(productDto))
 
     $.ajax({
         url: '/products',
         method: 'POST',
-        dataType: 'json',
-        data: JSON.stringify(product),
+        // dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(productDto),
         success: function (data) {
             alert(data);
         }
