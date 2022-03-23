@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
@@ -30,9 +31,10 @@ import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:application.properties")
-@ComponentScan(basePackages = {"ru.kpfu.itis.services", "ru.kpfu.itis.repositories"})
+@ComponentScan(basePackages = "ru.kpfu.itis")
 @EnableJpaRepositories(value = "ru.kpfu.itis.repositories")
 @EnableTransactionManagement
+@EnableWebMvc
 public class ApplicationConfig extends WebMvcConfigurationSupport {
 
     @Autowired
@@ -69,6 +71,7 @@ public class ApplicationConfig extends WebMvcConfigurationSupport {
         viewResolver.setPrefix("");
         viewResolver.setSuffix(".ftl");
         viewResolver.setContentType("text/html; charset=UTF-8");
+
         return viewResolver;
     }
 
