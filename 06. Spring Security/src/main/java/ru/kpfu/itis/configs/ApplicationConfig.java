@@ -83,11 +83,6 @@ public class ApplicationConfig extends WebMvcConfigurationSupport {
         return configurer;
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     private Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         String[] propsNames = {"hibernate.hbm2ddl.auto", "hibernate.dialect",

@@ -58,4 +58,6 @@ public class User {
     )
     private List<Product> favourites;
 
+    @OneToMany(mappedBy = "user")
+    private List<Auth> auth;
 }
