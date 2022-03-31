@@ -1,13 +1,16 @@
 <!doctype html>
 <html>
 <head>
-    <link rel="stylesheet" href="../style/style.css">
+    <link rel="stylesheet" href="/resources/style/style.css">
     <title>SigUp</title>
 </head>
 <body>
 <div class="form-style-3">
     <form method="post">
         <fieldset>
+            <#if registrationStatus??>
+                ${registrationStatus}
+            </#if>
             <legend>Sign Up</legend>
             <label for="firstName"><span>First Name<span class="required">*</span></span><input type="text"
                                                                                                 class="input-field"

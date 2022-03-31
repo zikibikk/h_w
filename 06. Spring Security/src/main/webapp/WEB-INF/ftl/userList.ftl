@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/resources/css/style.css">
     <title>User List</title>
 </head>
 <body>

@@ -7,6 +7,7 @@ import ru.kpfu.itis.dtos.RegistrationDto;
 import ru.kpfu.itis.dtos.UserDto;
 import ru.kpfu.itis.enums.Gender;
 import ru.kpfu.itis.enums.Role;
+import ru.kpfu.itis.exceptions.UserAlreadyExistException;
 import ru.kpfu.itis.models.User;
 import ru.kpfu.itis.repositories.UserRepository;
 
@@ -33,16 +34,19 @@ public class UsersServicesImpl implements UserService {
 
     @Override
     public void signUp(RegistrationDto userDto) {
-
-        User user = User.builder()
-                .lastName(userDto.getLastName())
-                .firstName(userDto.getFirstName())
-                .gender(Gender.valueOf(userDto.getGender()))
-                .email(userDto.getEmail())
-                .passwordHash(passwordEncoder.encode(userDto.getPassword()))
-                .role(Role.ROLE_USER)
-                .build();
-        usersRepository.save(user);
+        if (!usersRepository.existsByEmail(userDto.getEmail())) {
+            User user = User.builder()
+                    .lastName(userDto.getLastName())
+                    .firstName(userDto.getFirstName())
+                    .gender(Gender.valueOf(userDto.getGender()))
+                    .email(userDto.getEmail())
+                    .passwordHash(passwordEncoder.encode(userDto.getPassword()))
+                    .role(Role.ROLE_USER)
+                    .build();
+            usersRepository.save(user);
+        } else {
+            throw new UserAlreadyExistException(String.format("Пользователь с email=%s уже существует", userDto.getEmail()));
+        }
     }
 
     @Override
