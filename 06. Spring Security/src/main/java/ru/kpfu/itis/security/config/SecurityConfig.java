@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ru.kpfu.itis.security.filter.CookieAuthFilter;
+import ru.kpfu.itis.security.handler.CustomLogoutSuccessHandler;
 import ru.kpfu.itis.security.handler.SuccessfulAuthenticationHandler;
 
 @ComponentScan("ru.kpfu.itis.security")
@@ -26,6 +27,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     @Qualifier("customSuccessfulAuthenticationHandler")
     private SuccessfulAuthenticationHandler successfulAuthenticationHandler;
+
+    @Autowired
+    @Qualifier("customLogoutSuccessHandler")
+    private CustomLogoutSuccessHandler customLogoutSuccessHandler;
 
     @Autowired
     @Qualifier("customUserDetailsImpl")
@@ -50,7 +55,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 //.defaultSuccessUrl("/profile")
                 .and()
-                .logout().logoutSuccessUrl("/signIn").permitAll()
+                .logout()
+                .logoutUrl("/signOut")
+                .logoutSuccessHandler(customLogoutSuccessHandler)
+                .logoutSuccessUrl("/signIn").permitAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 /*.and()
